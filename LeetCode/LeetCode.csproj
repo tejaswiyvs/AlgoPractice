@@ -39,12 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayProblems.cs" />
+    <Compile Include="CareerCup.cs" />
     <Compile Include="DataStructures\ArrayList.cs" />
     <Compile Include="DataStructures\Graph.cs" />
     <Compile Include="DataStructures\Heap.cs" />
     <Compile Include="DataStructures\List.cs" />
     <Compile Include="DataStructures\Tree.cs" />
     <Compile Include="LeetCodeEasy.cs" />
+    <Compile Include="ListProblems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
