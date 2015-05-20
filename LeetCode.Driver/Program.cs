@@ -13,8 +13,6 @@ namespace LeetCode.Driver
         static void Main(string[] args)
         {
             ArrayProblems problems = new ArrayProblems();
-            var result = problems.TwoSum(new int[] { -1, -2, -3, -4, -5 }, -8);
-            Console.Write(result);
             //foreach (var item in result)
             //{
             //    Console.WriteLine(item);
