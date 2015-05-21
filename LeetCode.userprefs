@@ -1,0 +1,17 @@
+﻿<Properties StartupItem="LeetCode.Driver/LeetCode.Driver.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="LeetCode.Driver/Program.cs">
+    <Files>
+      <File FileName="LeetCode/DataStructures/Tree.cs" Line="12" Column="12" />
+      <File FileName="LeetCode.Driver/Program.cs" Line="23" Column="23" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/teja/Projects/Play/AlgoPractice/LeetCode.Driver/Program.cs" line="99" column="1" />
+      <Breakpoint file="/Users/teja/Projects/Play/AlgoPractice/LeetCode.Driver/Program.cs" line="56" column="1" />
+      <Breakpoint file="/Users/teja/Projects/Play/AlgoPractice/LeetCode.Driver/Program.cs" line="16" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

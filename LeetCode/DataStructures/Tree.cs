@@ -49,25 +49,47 @@ namespace LeetCode.DataStructures
             this.Remove(root, Data);
         }
 
-        private void Remove(TreeNode node, int Data) {
+        private TreeNode Remove(TreeNode node, int Data) {
             if (node == null) {
-                return;
+                return null;
             }
 
-            if (node.Left != null && node.Left.Data == Data && node.Left.isLeaf()) {
-                node.Left = null;
-            }
-            else if (node.Left != null && node.Left.Data == Data && !node.Left.isLeaf()) { 
-                // Replace node.left with the right most node in the left subtree
-            }
-            else if (node.Right != null && node.Right.Data == Data && !node.Right.isLeaf())
+            if (node.Data < Data)
             {
-                node.Right = null;
+                node.Right = this.Remove(node.Right, Data);
+                return node;
             }
-            else if (node.Right != null && node.Right.Data == Data && !node.Right.isLeaf())
-            {
-                // Replace node.right with the left most node in the right subtree
+            else if (node.Data > Data) {
+                node.Left = this.Remove(node.Left, Data);
+                return node;
             }
+            else {
+                if (node.isLeaf()) {
+                    return null;
+                }
+                else if (node.Left == null) {
+                    node = node.Right;
+                    return node;
+                }
+                else if (node.Right == null)
+                {
+                    node = node.Left;
+                    return node;
+                }
+                else 
+                {
+                    node.Data = findMax(node.Left);
+                    node.Left =  this.Remove(node.Left, node.Data);
+                    return node;
+                }
+            }
+        }
+
+        private int findMax(TreeNode node)
+        {
+            if (node == null) { throw new ArgumentNullException(); }
+            else if (node.Right == null) { return node.Data; }
+            return findMax(node.Right);
         }
 
         // Should probably be an enum instead, but whatever

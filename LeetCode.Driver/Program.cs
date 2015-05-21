@@ -73,7 +73,7 @@ namespace LeetCode.Driver
 				if (lvl % 2 != 0) {
 					for (int i = 0; i < l.Count; i++) {
 						var n = (TreeNode)l [i];
-						Con¿÷sole.Write (n.Data + " ");
+						Console.Write (n.Data + " ");
 						if (n.Left != null) {
 							holder.Add (n.Left);
 						} 
