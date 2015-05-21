@@ -133,7 +133,7 @@ namespace LeetCode.DataStructures
         }
     }
 
-    class TreeNode
+    public class TreeNode
     {
         public int Data { get; set; }
         public TreeNode Left { get; set; }
