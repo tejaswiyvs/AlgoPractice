@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="LeetCode/LeetCode.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="LeetCode/DataStructures/Tree.cs">
+    <Files>
+      <File FileName="LeetCode/DataStructures/Tree.cs" Line="23" Column="10" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
