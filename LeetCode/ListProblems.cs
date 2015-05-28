@@ -72,7 +72,36 @@ namespace LeetCode
             previous.next = null;
             this.MergeLists(previous, l1, l2);
         }
-       
+
+        public ListNode SwapPairs(ListNode head)
+        {
+            if (head == null || head.next == null) { return head; }
+            ListNode previous = null;
+            ListNode current = head;
+            ListNode next = current.next;
+            head = next;
+            int count = 1;
+            while (next != null)
+            {
+                if (count % 2 != 0)
+                {
+                    if (previous != null) { previous.next = next; };
+                    current.next = next.next;
+                    next.next = current; 
+                    previous = next;
+                    next = current.next;
+                }
+                else
+                {
+                    previous = current;
+                    current = current.next;
+                    next = next.next;
+                }
+                count++;
+            }
+
+            return head;
+        }
     }
 
     public class ListNode

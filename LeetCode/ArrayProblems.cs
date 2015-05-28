@@ -497,5 +497,374 @@ namespace LeetCode
                 this.GenerateParenthesis(nOpen, nClosed - 1, current + ")", result);
             }
         }
+
+        public IList<IList<int>> Permute(int[] nums)
+        {
+            var result = new List<IList<int>>();
+            this.Permute(nums, 0, result);
+            return result;
+        }
+
+        public void Permute(int[] nums, int idx, IList<IList<int>> result)
+        {
+            if (nums == null || nums.Length == 0 || idx > nums.Length) { return; }
+
+            if (idx == nums.Length)
+            {
+                result.Add(nums.ToList());
+                return;
+            }
+
+            for (int i = idx; i < nums.Length; i++)
+            {
+                if (i != idx && nums[i] == nums[idx]) { continue; }
+                this.swap(nums, i, idx);
+                this.Permute(nums, idx + 1, result);
+                this.swap(nums, i, idx);
+            }
+
+            return;
+        }
+
+        private void swap(int[] nums, int i, int j)
+        {
+            var tmp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tmp;
+        }
+
+        public int UniquePaths(int m, int n) {
+            return this.UniquePaths(0, 0, m, n);
+        }
+
+        private int UniquePaths(int i, int j, int m, int n) {
+            if (i > m || i < 0 || j > n || j < 0) { return 0; }
+            if (m == i)
+            {
+                return 1;
+            }
+            else if (n == j) {
+                return 1;
+            }
+
+            return this.UniquePaths(i, j + 1, m, n) + this.UniquePaths(i + 1, j, m, n);
+        }
+
+        public int MinPathSum(int[,] grid)
+        {
+            for (int i = 0; i < grid.GetLength(0); i++) {
+                for (int j = 0; j < grid.GetLength(1); j++) {
+                    int sum1 = Int32.MaxValue;
+                    int sum2 = Int32.MaxValue;
+                    int sum = 0;
+                    if (IsValidIdx(grid, i - 1, j)) {
+                        sum1 = grid[i - 1, j];
+                    }
+
+                    if (IsValidIdx(grid, i, j - 1)) {
+                        sum2 = grid[i, j - 1];
+                    }
+
+                    if (sum1 != Int32.MaxValue || sum2 != Int32.MaxValue) {
+                        sum = Math.Min(sum1, sum2);
+                    }
+
+                    grid[i, j] = grid[i, j] + sum;
+                }
+            }
+
+            return grid[grid.GetLength(0) - 1, grid.GetLength(1) - 1];
+        }
+
+        private bool IsValidIdx(int[,] grid, int i, int j)
+        {
+            return !(i < 0 || i >= grid.GetLength(0) || j < 0 || j >= grid.GetLength(1));
+        }
+
+        private int MinPathSum(int[,] grid, int i, int j, int current) {
+            if (i >= grid.GetLength(0) || i < 0 || j >= grid.GetLength(1) || j < 0) { return Int32.MaxValue; }
+            if (i == grid.GetLength(0) - 1 && j == grid.GetLength(1) - 1) {
+                return current;
+            }
+
+            var sum1 = this.MinPathSum(grid, i + 1, j, current + grid[i, j]);
+            var sum2 = this.MinPathSum(grid, i, j + 1, current + grid[i, j]);
+
+            return (sum1 < sum2) ? sum1 : sum2;
+        }
+
+        public IList<IList<int>> Combine(int n, int k)
+        {
+            var result = new List<IList<int>>();
+            var input = new int[n];
+            for (int i = 1; i < n + 1; i++)
+            {
+                input[i - 1] = i;
+            }
+            this.Combine(input, 0, k, result);
+            return result;
+        }
+
+        private void Combine(int[] n, int idx, int k, IList<IList<int>> result)
+        {
+            if (n == null || idx < 0 || idx > n.Length - 1 || result == null) { return; }
+            if (idx == k)
+            {
+                var l = new List<int>();
+                for (int i = 0; i < k; i++)
+                {
+                    l.Add(n[i]);
+                }
+                result.Add(l);
+                return;
+            }
+
+            for (int i = idx; i < n.Length; i++)
+            {
+                this.swap(n, i, idx);
+                this.Combine(n, idx + 1, k, result);
+                this.swap(n, i, idx);
+            }
+        }
+
+        public bool Exist(char[,] board, string word)
+        {
+            bool flag = false;
+            for (int i = 0; i < board.GetLength(0); i++)
+                for (int j = 0; j < board.GetLength(1); j++)
+                { 
+                    if (this.Exist(board, word, i, j, "", new HashSet<Tuple<int, int>>())){
+                        return true;
+                    } 
+                }
+            return false;
+        }
+
+        private bool Exist(char[,] board, string word, int i, int j, string current, HashSet<Tuple<int, int>> visited) {
+            if (!IsValidIdx(board, i, j) || current == null || word == null || visited == null || visited.Contains(new Tuple<int, int>(i, j))) {
+                return false;
+            }
+
+            visited.Add(new Tuple<int, int>(i, j));
+            current = current + board[i, j];
+            if (current == word) { return true; }
+            if (current.Length == word.Length && current != word) { return false; }
+            
+            return Exist(board, word, i - 1, j - 1, current, visited) 
+            || Exist(board, word, i - 1, j, current, visited)
+            || Exist(board, word, i - 1, j + 1, current, visited)
+            || Exist(board, word, i, j - 1, current, visited)
+            || Exist(board, word, i, j + 1, current, visited)
+            || Exist(board, word, i + 1, j - 1, current, visited)
+            || Exist(board, word, i + 1, j, current, visited)
+            || Exist(board, word, i + 1, j + 1, current, visited);
+        }
+
+        private bool IsValidIdx(char[,] board, int i, int j)
+        {
+            return !(board == null || i < 0 || i >= board.GetLength(0) || j < 0 || j >= board.GetLength(1));
+        }
+
+        public float ToFloat(char[] input) {
+            if (input == null || input.Length == 0) { return 0; }
+            float result = 0;
+            int decimalPosition = this.findDecimal(input);
+            int pow = (decimalPosition != -1) ? decimalPosition - (input.Length - 1) : 0;
+            for (int i = input.Length - 1; i >= 0; i--) {
+                if (i != decimalPosition)
+                {
+                    result = result + ((int)Char.GetNumericValue(input[i])) * (float)Math.Pow(10, pow);
+                    pow++;
+                }
+            }
+
+            return result;
+        }
+
+        private int findDecimal(char[] input) {
+            if (input == null) return -1;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == '.') { return i; }
+            }
+
+            return -1;
+        }
+
+        private void PopulateInorderSuccesor(InOrderTreeNode node)
+        {
+            if (node == null) return;
+            node.Next = this.successor(node);
+            PopulateInorderSuccesor(node.Left);
+            PopulateInorderSuccesor(node.Right);
+        }
+
+        private InOrderTreeNode successor(InOrderTreeNode node)
+        {
+            if (node == null) { return null; }
+            if (node.Right != null)
+            {
+                return this.min(node.Right);
+            }
+            else 
+            {
+                InOrderTreeNode n1 = node.Parent;
+                InOrderTreeNode n2 = node;
+                InOrderTreeNode result = null;
+                while (n1 != null)
+                {
+                    if (n1.Left == n2)
+                    {
+                        result = n1;
+                        break;
+                    }
+                    else 
+                    {
+                        n2 = n1;
+                        n1 = n1.Parent;
+                    }
+                }
+                return result;
+            }
+        }
+
+        private InOrderTreeNode min(InOrderTreeNode node)
+        {
+            if (node.Left == null) { return node; }
+            return min(node.Left);
+        }
+
+        public int MaxClusterSize(int[,] input)
+        {
+            var visited = new HashSet<Tuple<int, int>>();
+            var maxClusterSize = 0;
+            for (int i = 0; i < input.Length; i++) {
+                for (int j = 0; j < input.Length; j++) {
+                    if (!visited.Contains(new Tuple<int, int>(i, j))) {
+                        var clusterSize = this.MaxClusterSize(input, i, j, visited, 0);
+                        if (clusterSize > maxClusterSize) {
+                            maxClusterSize = clusterSize;
+                        }
+                    }
+                }
+            }
+
+            return maxClusterSize;
+        }
+
+        private int MaxClusterSize(int[,] input, int i, int j, HashSet<Tuple<int, int>> visited, int size)
+        {
+            if (input == null || visited == null || !IsValidIdx(input, i, j)) {
+                return 0;
+            }
+
+            if (visited.Contains(new Tuple<int, int>(i, j))) {
+                return 0;
+            }
+
+            visited.Add(new Tuple<int, int>(i, j));
+            if (input[i, j] == 0) {
+                return 0;
+            }
+
+            size++;
+
+            size = Math.Max(this.MaxClusterSize(input, i - 1, j, visited, size), size);
+            size = Math.Max(this.MaxClusterSize(input, i + 1, j, visited, size), size);
+            size = Math.Max(this.MaxClusterSize(input, i, j - 1, visited, size), size);
+            size = Math.Max(this.MaxClusterSize(input, i, j + 1, visited, size), size);
+
+            return size;
+        }
+
+        public string BinarySum(string s1, string s2)
+        {
+            if (string.IsNullOrEmpty(s1) && string.IsNullOrEmpty(s2)) { return null; }
+            else if (string.IsNullOrEmpty(s1)) { return s2; }
+            else if (string.IsNullOrEmpty(s2)) { return s1; }
+
+            int i1 = s1.Length - 1;
+            int i2 = s2.Length - 1;
+            int carry = 0;
+            StringBuilder sb = new StringBuilder();
+
+            while (i1 >= 0 && i2 >= 0) {
+                int num1 = (int)Char.GetNumericValue(s1[i1]);
+                int num2 = (int)Char.GetNumericValue(s2[i2]);
+                var t = this.BinarySum(num1, num2, carry);
+                carry = t.Item2;
+                sb.Append(t.Item1);
+                i1--;
+                i2--;
+            }
+
+            while (i1 >= 0)
+            {
+                int num1 = (int)Char.GetNumericValue(s1[i1]);
+                var t = this.BinarySum(num1, 0, carry);
+                carry = t.Item2;
+                sb.Append(t.Item1);
+                i1--;
+            }
+
+            while (i2 >= 0)
+            {
+                int num1 = (int)Char.GetNumericValue(s1[i1]);
+                var t = this.BinarySum(num1, 0, carry);
+                carry = t.Item2;
+                sb.Append(t.Item1);
+                i2--;
+            }
+
+            if (carry > 0) {
+                sb.Append(carry);
+            }
+
+            var s = sb.ToString().ToCharArray();
+            Array.Reverse(s);
+            return new string(s);
+        }
+
+        private Tuple<int, int> BinarySum(int num1, int num2, int num3)
+        {
+            if (num1 + num2 + num3 == 3) { return new Tuple<int, int>(1, 1); }
+            else if (num1 + num2 + num3 == 2) { return new Tuple<int, int>(0, 1); }
+            else if (num1 + num2 + num3 == 1) { return new Tuple<int, int>(1, 0); }
+            else { return new Tuple<int, int>(0, 0); }
+        }
+
+        public Tuple<int, int> LongestPositiveSequence(int[] input)
+        {
+            if (input == null || input.Length == 0) return null;
+
+            int maxCount = 0, maxStartIdx = -1, startIdx = -1, currentCount = 0;
+            for (int i = 0; i < input.Length; i++) {
+                if (input[i] > 0)
+                {
+                    if (startIdx == -1) { startIdx = i; }
+                    currentCount++;
+                    if (currentCount > maxCount) { maxCount = currentCount; maxStartIdx = startIdx; }
+                }
+                else
+                {
+                    startIdx = -1;
+                    currentCount = 0;
+                }
+            }
+
+            return new Tuple<int, int>(maxCount, maxStartIdx);
+        }
+
+        
+    }
+
+    class InOrderTreeNode
+    {
+        public int Data { get; set; }
+        public InOrderTreeNode Parent { get; set; }
+        public InOrderTreeNode Left { get; set; }
+        public InOrderTreeNode Right { get; set; }
+        public InOrderTreeNode Next { get; set; }
     }
 }

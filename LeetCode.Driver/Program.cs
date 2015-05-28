@@ -12,11 +12,12 @@ namespace LeetCode.Driver
     {
         static void Main(string[] args)
         {
-            ArrayProblems problems = new ArrayProblems();
-            //foreach (var item in result)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            ArrayProblems p = new ArrayProblems();
+            var result = new int[] { 0, 0, 0, 0 };
+            while (result != null)
+            {
+                result = p.NextSparse(result);
+            }
         }
     }
 }
